@@ -1,0 +1,11 @@
+Metadata-Version: 2.1
+Name: recommender-app
+Version: 1.0.0
+Summary: A Recommender app for multiple collaborative filtering implementations- User Based collaborative filtering and Item Based Collaborative Filtering
+Home-page: TBD
+Author: Rahul Sharma
+Author-email: reethified@gmail.com
+License: BSD
+Keywords: A Recommender app for multiple collaborative filtering implementations
+Classifier: Development Status :: Alpha
+Classifier: Topic :: collaborative filtering
