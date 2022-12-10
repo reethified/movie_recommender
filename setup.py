@@ -1,20 +1,13 @@
 from setuptools import setup,find_packages
 
 requirements = [
-    'click<=6.0',
     'flask',
-    'flask-admin',
     'flask-wtf',
-    'flask-restful',
-    'flask-bootstrap',
-    'implicit',
-    'notebook',
-    'notebook_shim',
     'numpy',
     'pandas',
     'scikit-learn',
     'scipy',
-    'seaborn',
+    'seaborn'
 
 ]
 
