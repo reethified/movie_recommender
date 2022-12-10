@@ -1,0 +1,37 @@
+{% block recommender1 %}
+<div id="inner_div_overflow">
+    <table>
+        <tbody>
+
+
+
+        <tr>
+ {% for movie in movies %}
+            <td>
+                <div>
+                    <div>
+                        <img alt="{{movie}}" src="https://liangfgithub.github.io/MovieImages/{{movie}}.jpg?raw=true">
+                    </div>
+                    <div style="text-align: center;">
+                        <div class="rate">
+                            <input id="star_{{movie}}_5" name="{{movie}}_rate" type="radio" value="{{movie}}_5"/>
+                            <label for="star_{{movie}}_5" title="text">5 stars</label>
+                            <input id="star_{{movie}}_4" name="{{movie}}_rate" type="radio" value="{{movie}}_4"/>
+                            <label for="star_{{movie}}_4" title="text">4 stars</label>
+                            <input id="star_{{movie}}_3" name="{{movie}}_rate" type="radio" value="{{movie}}_3"/>
+                            <label for="star_{{movie}}_3" title="text">3 stars</label>
+                            <input id="star_{{movie}}_2" name="{{movie}}_rate" type="radio" value="{{movie}}_2"/>
+                            <label for="star_{{movie}}_2" title="text">2 stars</label>
+                            <input id="star_{{movie}}_1" name="{{movie}}_rate" type="radio" value="{{movie}}_1"/>
+                            <label for="star_{{movie}}_1" title="text">1 star</label>
+                        </div>
+                    </div>
+                </div>
+            </td>
+              {% endfor %}
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Suggestions</title>
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+</head>
+<body>
+<div><h1 align="center">Welcome to Movie Recommendation!</h1>
+    <div>Movies: {{ stats.movies }}</div>
+    <div>Users: {{ stats.users }}</div>
+</div>
+
+<div>
+    <form action="/">
+        <button name="Reset" value="Reset">Reset</button>
+    </form>
+</div>
+
+<div><h4>Step 1: Tell us what you like</h4>
+    <form action="/recommend1M1" method="POST">
+        <b>Genre</b> <select name="generes" onchange="this.form.submit()">
+        <option SELECTED value="">select</option>
+        {% for genere in generes %}
+        <option value="{{genere}}" {% if genere == selected_genre %} selected {% endif %} >{{genere}}</option>
+        {% endfor %}
+    </select>
+    </form>
+
+</div>
+
+{% if step1 %}
+<div>
+    <h4>Step 2: Click Movies you like</h4>
+    {% include "recommender1.html" %}
+</div>
+{% endif %}
+
+{% if True %}
+<div>
+    <h4>Step 3: Review Recommendations</h4>
+    <p>&#128512;</p>
+
+    {% include "recommender2.html" %}
+</div>
+{% endif %}
+<div class="content">
+    {% include "footer.html" %}
+</div>
+
+</body>
+</html>
+
+<!-- Tell us what you like-->
+<!-- other users also liked this -->
