@@ -4,47 +4,49 @@
     <meta charset="UTF-8">
     <title>Movie Suggestions</title>
     <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+    <script src="{{url_for('static', filename='main.js')}}"></script>
 </head>
 <body>
-<div><h1 align="center">Welcome to Movie Recommendation!</h1>
-    <div>Movies: {{ stats.movies }}</div>
-    <div>Users: {{ stats.users }}</div>
-</div>
+<div style="margin-top: 40px"><h1 align="center">Welcome to Movie Recommendation!</h1></div>
 
-<div>
-    <form action="/">
-        <button name="Reset" value="Reset">Reset</button>
-    </form>
+</br></br>
+<div >
+<div class="div_top" >
+    <b><p style="text-align:center;">Step 1: Tell us which genre you like &#128525;</p></b>
 </div>
-
-<div><h4>Step 1: Tell us what you like</h4>
-    <form action="/recommend1M1" method="POST">
-        <b>Genre</b> <select name="generes" onchange="this.form.submit()">
-        <option SELECTED value="">select</option>
-        {% for genere in generes %}
-        <option value="{{genere}}" {% if genere == selected_genre %} selected {% endif %} >{{genere}}</option>
-        {% endfor %}
-    </select>
+<div class="div_top">
+    <form action="/recommend1M1" id="frecommend1" method="POST">
+        <select class="round" name="generes" onchange="this.form.submit()">
+            <option SELECTED value="">select</option>
+            {% for genere in generes %}
+            <option value="{{genere}}" {% if genere == selected_genre %} selected {% endif %} >{{genere}}</option>
+            {% endfor %}
+        </select>
     </form>
 
 </div>
+    </div>
 
 {% if step1 %}
-<div>
-    <h4>Step 2: Click Movies you like</h4>
-    {% include "recommender1.html" %}
-</div>
+{% include "recommender1.html" %}
 {% endif %}
 
-{% if True %}
-<div>
-    <h4>Step 3: Review Recommendations</h4>
-    <p>&#128512;</p>
+{% include "layout.html" %}
 
-    {% include "recommender2.html" %}
+</br></br></br>
+
+
+{% if step1 and step2 %}
+{% include "recommender2.html" %}
+{% endif %}
+{% if step1 %}
+<div class="div_top" style="margin-top: 50px">
+    <form action="/">
+        <button class="button-reset" name="Reset" value="Reset">Reset</button>
+    </form>
 </div>
 {% endif %}
-<div class="content">
+<div>
     {% include "footer.html" %}
 </div>
 

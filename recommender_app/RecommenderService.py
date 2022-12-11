@@ -41,7 +41,3 @@ def recommender2IBCF(query):
     queryStr = str(query, 'utf-8')
     print("Search Query:", queryStr)
     return RecommenderImpl.movies.head(5)
-
-
-
-

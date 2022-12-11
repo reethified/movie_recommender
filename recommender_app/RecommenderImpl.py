@@ -33,7 +33,7 @@ def getGenres():
     return all_generes
 
 def getIntialVals():
-    return {"users":ratings.UserID.nunique(),"movies":ratings.MovieID.nunique(), 'Ratings': ratings.Rating.unique(), "generes":all_generes}
+    return {"users":ratings.UserID.nunique(),"movies":ratings.MovieID.nunique(), 'ratings': len(ratings), "generes":all_generes}
 
 
 def recommender1_m1(genre,n=5):

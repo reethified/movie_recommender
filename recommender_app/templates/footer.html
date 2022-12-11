@@ -1,13 +1,16 @@
 {% block footer %}
 <div class="footer-clean">
         <footer>
-            <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-3 item social">
                         <p class="copyright">PSL 542 Movie Recommendation Project</p>
+
+                        <div style="display: inline-block;">
+    ℹ️ <p class="copyright1">Powered on MovieLens</p> 🚀🚀🚀 <p class="copyright1"> Movies: {{ stats.movies }} </p> &nbsp; <p class="copyright1"> Users: {{ stats.users }}</p> &nbsp;<p class="copyright1"> Ratings: {{stats.ratings}}</p>
+</div>
+                        </div>
                     </div>
-                </div>
-            </div>
+
         </footer>
     </div>
 {% endblock %}
