@@ -1,7 +1,14 @@
-html, body {
-    height: 80%;
-    min-height: 100%;
+html {
+   height: 1054px;
+   width: 80%;
+  box-sizing: border-box;
+}
+body {
     width: 80%;
+  box-sizing: border-box;
+     height: 900px;
+   overflow-y: scroll;
+   overflow-x: scroll;
 }
 
 html {
@@ -14,8 +21,12 @@ html {
     display:inline-block;
 
 }
+
 body{ margin: auto; }
 
+.div_top p{
+  text-align:center; font-size: 16px; font-family: Times; font-weight: bold;
+}
 .gallery_wrapper {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
@@ -24,7 +35,7 @@ body{ margin: auto; }
 }
 
 .footer-clean {
-  padding:50px 0;
+  padding:50px 0px 0px 0px;
   background-color:#fff;
   color:#4b4c4d;
 }
@@ -321,6 +332,8 @@ a {
   background-size: 110%;
   font-family: 'Oswald', sans-serif;
   font-weight: bold;
+    color: #f6fafa;
+  font-weight: 700;
    box-shadow: 0px 0px 0px 2px rgba(255, 255, 255, 0.16) inset, 0px 0px 10px 0px #33E7EA;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#33E7EA), to(rgba(161, 245, 245, 0.24))), url("https://cdn2.itpro.co.uk/sites/itpro/files/server_room.jpg");
   background-image: linear-gradient(to bottom, #33E7EA, rgba(161, 245, 245, 0.24)), url("https://cdn2.itpro.co.uk/sites/itpro/files/server_room.jpg");

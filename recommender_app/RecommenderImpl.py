@@ -2,6 +2,7 @@ import pandas as pd
 import warnings, re, os
 import seaborn as sns
 sns.set_theme()
+import numpy as np
 from sklearn.preprocessing import minmax_scale
 import scipy.sparse as sparse
 from sklearn.neighbors import NearestNeighbors
@@ -28,12 +29,14 @@ movies_cleaned = pd.concat([movies,dummies_genres],axis=1)
 movies_cleaned.drop('Genres',inplace=True,axis=1)
 total_genres=dummies_genres.columns.values
 mov_rat = movies_cleaned.merge(ratings, on='MovieID',how="inner")
+mov_rat_agg= mov_rat[['MovieID','Title_1','Rating']].groupby(['MovieID','Title_1'])['Rating'].agg(Mean='mean', Count='count')
 
+db_stats = {"users":ratings.UserID.nunique(),"movies":ratings.MovieID.nunique(), 'ratings': len(ratings), "generes":all_generes}
 def getGenres():
     return all_generes
 
 def getIntialVals():
-    return {"users":ratings.UserID.nunique(),"movies":ratings.MovieID.nunique(), 'ratings': len(ratings), "generes":all_generes}
+    return db_stats.copy()
 
 
 def recommender1_m1(genre,n=5):
@@ -48,6 +51,11 @@ def recommender1_m1(genre,n=5):
     genre_rating['score']=genre_rating.apply(moviescore,axis=1)
     return genre_rating.score.nlargest(n=n)
 
+genre_recommended ={}
+for genre_selected in all_generes:
+    print(genre_selected)
+    genre_recommended[genre_selected] = recommender1_m1(genre_selected,10)
+
 def recommender1_m2(genre,n=5,min_count=100):
     mov_rat_adv = mov_rat[(mov_rat[genre]==1)]
     mov_rat_adv.reset_index(drop=True,inplace=True)
@@ -55,6 +63,10 @@ def recommender1_m2(genre,n=5,min_count=100):
     genre_agg_filtered = genre_agg[genre_agg['Count']>min_count].reset_index()
     genre_agg_filtered.sort_values(by="Mean", ascending=False,inplace=True)
     return genre_agg_filtered.head(n)
+
+def getRating(recommendations):
+    rating = mov_rat_agg[mov_rat_agg.index.isin(recommendations, level=0)]
+    return np.floor(rating.Mean.values).astype(int).tolist()
 
 class UBCF:
     """
@@ -72,6 +84,7 @@ class UBCF:
         self.dataset = mov_rat.pivot_table(index="UserID", columns='MovieID', values="Rating")
         dataset_norm = self.dataset.fillna(0).subtract(self.dataset.mean(axis=1), axis='rows')
         sparse_usr_movie = sparse.csr_matrix(dataset_norm.values)
+        self.dataset_shape = dataset_norm.shape
         ubcf_knn = NearestNeighbors(metric=metric, algorithm=algorithm, n_neighbors=n_neighbors, n_jobs=n_jobs)
         self.ubcf_knn_fit = ubcf_knn.fit(sparse_usr_movie)
 

@@ -1,7 +1,29 @@
 {% block recommender2 %}
 
 <div>
-    <h4>Step 3: Review Recommendations</h4>
-
+    <h4>Review Recommendations</h4>
+    </br>
 </div>
+
+<div class=inner_div_overflow>
+    <table>
+        <tbody>
+        <tr>
+            {% set count = namespace(value=0) %}
+            {% for movie in movies_recommended.movies %}
+
+            <td>
+
+                    <div>
+                        <img alt="{{movie}}" src="https://liangfgithub.github.io/MovieImages/{{movie}}.jpg?raw=true">
+                    </div>
+
+            </td>
+            {% set count.value = count.value + 1 %}
+            {% endfor %}
+        </tr>
+        </tbody>
+    </table>
+</div>
+
 {% endblock %}

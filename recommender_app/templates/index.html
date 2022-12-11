@@ -12,7 +12,7 @@
 </br></br>
 <div >
 <div class="div_top" >
-    <b><p style="text-align:center;">Step 1: Tell us which genre you like &#128525;</p></b>
+    <b><p>Step 1: Tell us which genre you like &#128525;</p></b>
 </div>
 <div class="div_top">
     <form action="/recommend1M1" id="frecommend1" method="POST">
@@ -36,15 +36,20 @@
 </br></br></br>
 
 
-{% if step1 and step2 %}
+{% if step2 %}
 {% include "recommender2.html" %}
 {% endif %}
-{% if step1 %}
+{% if step1 or step2 %}
 <div class="div_top" style="margin-top: 50px">
     <form action="/">
         <button class="button-reset" name="Reset" value="Reset">Reset</button>
     </form>
 </div>
+{% endif %}
+{% if step1 == False and step2  == False %}
+            {% for i in range(0,20) %}
+            </br>
+            {% endfor %}
 {% endif %}
 <div>
     {% include "footer.html" %}
