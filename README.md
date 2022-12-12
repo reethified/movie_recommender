@@ -1,7 +1,7 @@
 # The MOVIE RECOMMENDATION PROJECT
 ## PSL-542
 
-**[🔴Live Recommendation App]**(http://rahul86s.pythonanywhere.com/)
+[🔴**Live Recommendation App**](http://rahul86s.pythonanywhere.com/)
 
 [Implementation Notebook](https://github.com/reethified/movie_recommender/blob/master/movie_recommen.ipynb)
 
