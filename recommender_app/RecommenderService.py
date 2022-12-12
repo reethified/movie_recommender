@@ -5,13 +5,16 @@ from recommender_app import RecommenderImpl
 from recommender_app.RecommenderImpl import UBCF, IBCF
 
 ubcf = UBCF()
-IBCF = IBCF()
+ibcf = IBCF()
 
 def getStats():
     return RecommenderImpl.getIntialVals()
 
-def recommender1M1(genre):
-    recommended = RecommenderImpl.genre_recommended[genre]
+def recommender1M1(genre, method="m1"):
+    if method == "m2":
+        recommended = RecommenderImpl.genre_recommended_m2[genre]
+    else:
+        recommended = RecommenderImpl.genre_recommended_m1[genre]
     result = recommended.index.get_level_values(level=0)
     return result.values.tolist()
 
@@ -33,17 +36,18 @@ def recommender2UBCF(selected_movies):
         movies[movie - 1] = selected_movies[movie]
     df=pd.DataFrame(data=movies,index=np.arange(1,movie_len+1)).T
     recommendations = ubcf.recommend(df,n_recommendations=10)
-    top_10=recommendations.index.values[0:10]
-    ratings = RecommenderImpl.getRating(top_10)
-    return {"movies":top_10,"ratings": ratings}
+    top_n=recommendations.index.values
+    top_n = [x for x in top_n if x not in selected_movies]
+    #ratings = RecommenderImpl.getRating(top_10)
+    return {"movies":top_n[0:10],"ratings": {}}
 
 
-def recommender2IBCF(query):
+def recommender2IBCF(movie):
     """
     Recommender System 2. User Based collaborative filtering
     :param query:
     :return:
     """
-    queryStr = str(query, 'utf-8')
-    print("Search Query:", queryStr)
-    return RecommenderImpl.movies.head(5)
+    recommendations = ibcf.recommend(movie,50)
+    top_n=recommendations.Movies.values.tolist()
+    return {"movies":top_n[0:50],"ratings": {}}

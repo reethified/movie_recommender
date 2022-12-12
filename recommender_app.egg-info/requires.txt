@@ -1,7 +1,0 @@
-flask
-flask-wtf
-numpy
-pandas
-scikit-learn
-scipy
-seaborn

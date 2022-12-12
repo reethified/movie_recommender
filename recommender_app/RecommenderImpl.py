@@ -51,11 +51,6 @@ def recommender1_m1(genre,n=5):
     genre_rating['score']=genre_rating.apply(moviescore,axis=1)
     return genre_rating.score.nlargest(n=n)
 
-genre_recommended ={}
-for genre_selected in all_generes:
-    print(genre_selected)
-    genre_recommended[genre_selected] = recommender1_m1(genre_selected,10)
-
 def recommender1_m2(genre,n=5,min_count=100):
     mov_rat_adv = mov_rat[(mov_rat[genre]==1)]
     mov_rat_adv.reset_index(drop=True,inplace=True)
@@ -63,6 +58,18 @@ def recommender1_m2(genre,n=5,min_count=100):
     genre_agg_filtered = genre_agg[genre_agg['Count']>min_count].reset_index()
     genre_agg_filtered.sort_values(by="Mean", ascending=False,inplace=True)
     return genre_agg_filtered.head(n)
+
+genre_recommended_m1 ={}
+print(f"Loading Genre{all_generes}")
+for genre_selected in all_generes:
+    genre_recommended_m1[genre_selected] = recommender1_m1(genre_selected,10)
+
+genre_recommended_m2 ={}
+print(f"Loading Genre{all_generes}")
+for genre_selected in all_generes:
+    genre_recommended_m2[genre_selected] = recommender1_m2(genre_selected,10)
+
+
 
 def getRating(recommendations):
     rating = mov_rat_agg[mov_rat_agg.index.isin(recommendations, level=0)]
@@ -110,12 +117,13 @@ class IBCF:
     def __init__(self,metric='cosine', algorithm='brute', n_neighbors=20, n_jobs=-1):
         from sklearn.neighbors import NearestNeighbors
         self.dataset = mov_rat.pivot_table(index="MovieID", columns='UserID', values="Rating")
-        dataset_norm = self.dataset.fillna(0)
-        sparse_movie_usr = sparse.csr_matrix(dataset_norm.values)
+        self.dataset_norm = self.dataset.fillna(0)
+        sparse_movie_usr = sparse.csr_matrix(self.dataset_norm.values)
         model2_ibcf = NearestNeighbors(metric=metric, algorithm=algorithm, n_neighbors=n_neighbors, n_jobs=n_jobs)
         self.ibcf_knn_fit = model2_ibcf.fit(sparse_movie_usr)
 
     def recommend(self,movie,n_recommendations=20):
+        movie = self.dataset_norm.filter(items=[movie], axis=0)
         distances, indices=self.ibcf_knn_fit.kneighbors(movie, n_neighbors=n_recommendations+1)
         indices=indices.squeeze().tolist()[1:]
         distances=distances.squeeze().tolist()[1:]

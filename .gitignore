@@ -1,3 +1,5 @@
 venv
 .ipynb_checkpoins
 __pycache__
+.idea
+recommender_app.egg-info

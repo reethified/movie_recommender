@@ -7,7 +7,8 @@ requirements = [
     'pandas',
     'scikit-learn',
     'scipy',
-    'seaborn'
+    'seaborn',
+    'python-dotenv'
 
 ]
 
